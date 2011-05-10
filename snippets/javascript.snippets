@@ -1,0 +1,217 @@
+# MIT
+snippet mit
+	 /*
+	   Copyright (c) ${1:2011 Ivo Wetzel}.
+
+	   Permission is hereby granted, free of charge, to any person obtaining a copy
+	   of this software and associated documentation files (the "Software"), to deal
+	   in the Software without restriction, including without limitation the rights
+	   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	   copies of the Software, and to permit persons to whom the Software is
+	   furnished to do so, subject to the following conditions:
+
+	   The above copyright notice and this permission notice shall be included in
+	   all copies or substantial portions of the Software.
+
+	   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	   THE SOFTWARE.
+	*/
+	
+	${2}
+
+# GPL
+snippet gpl
+	/*
+	  ${1:Name}
+	  Copyright (c) ${2:2011 Ivo Wetzel}.
+
+	  All rights reserved.
+
+	  $1 is free software: you can redistribute it and/or
+	  modify it under the terms of the GNU General Public License as published by
+	  the Free Software Foundation, either version 3 of the License, or
+	  (at your option) any later version.
+
+	  $1 is distributed in the hope that it will be useful,
+	  but WITHOUT ANY WARRANTY; without even the implied warranty of
+	  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	  GNU General Public License for more details.
+
+	  You should have received a copy of the GNU General Public License along with
+	  $1. If not, see <http://www.gnu.org/licenses/>.
+	*/
+
+	${3}
+
+# JSDOC
+snippet doc
+	/*
+		${1:TODO: Add Description}
+
+		@argument ${2:TYPE argName A string}
+		@returns ${3:Nothing}
+		@type ${4:undefined}
+	*/
+snippet cdoc
+	/*
+		${1:TODO: Add Description}
+
+		@constructor
+		@argument ${2:TYPE argName A string}
+	*/
+snippet mdoc
+	/*
+		${1:TODO: Add Description}
+
+    	@class ${2:CLASSNAME}
+    	@argument ${3:TYPE argName A string}
+    	@returns ${4:Nothing}
+    	@type ${5:undefined}
+	*/
+snippet pdoc
+	/*
+		${1:TODO: Add Description}
+
+		@private
+		@argument ${2:TYPE argName A string}
+		@returns ${3:Nothing}
+		@type ${4:undefined}
+	*/
+
+# Comment line
+snippet com
+	// ${1:Some ridiculous long description thingy}---------------------------------------${2}
+	${3}
+# Comment header
+snippet COM
+	// ${1:Some ridiculous long description thingy} --------------------------------------${2}
+	// ------------------------------------------------------------------------------
+	${3}
+# Prototype
+snippet proto
+	${1:object}.prototype = {
+		${2}
+	};
+snippet rei
+	var ${1:name} = require('${2:$1}');${3}
+# Node.js on
+snippet on
+	${1:obj}.on('${2:event}', function(${3:arguments}) {
+		${4}  
+	});
+snippet clo
+	${1:obj} = ${2:constructor}(function(${3:arguments}) {
+		${5}
+		
+	})${4:;}
+# Neko
+snippet neko
+	var Class = require('neko').Class;${3}
+# Function
+snippet fun
+	function ${1:name}(${2:argument}) {
+		${3}
+	}
+# Neko Class
+snippet class
+	var ${1:name} = Class(function(${2:arguments}) {
+		
+	}, {
+		${3}
+	});
+snippet log
+	console.log(${1})
+# Anonymous Function wrapper
+snippet fan
+	(function(${1}) {
+		${3}
+	})(${2});
+
+# Cross Browser / Node.js Module wrapper
+snippet module
+	(function(exports, ${1:args, }undefined) {                                                                             
+		'use strict';
+		${5}
+
+		// Exports
+		exports.${3:Foo} = ${4:$3};
+
+	})(this.toString() === '[object Object]' ? module.exports : this${2});
+
+
+# Anonymous Function
+snippet f
+	function(${1}) {
+		${3}
+	}${2:;}
+# if
+snippet if
+	if (${1:true}) {
+		${2}
+	}
+# if ... else
+snippet ife
+	if (${1:true}) {
+		${2}
+
+	} else {
+		${3}
+	}
+# try catch
+snippet try
+	try {
+		${2}
+
+	} catch(${1:err}) {
+		${3}
+	}
+# tertiary conditional
+snippet ?
+	${1:c} ? ${2:a} : ${3:b}
+# for (...) {...}
+snippet for
+	for(var ${1:i} = 0, ${2:l} = ${3:obj.length}; $1 < $2; $1++) {
+		${4}
+	}
+# forin (...) {...}
+snippet forin
+	for(var ${1:i} in ${2:obj}) {
+		if ($2.hasOwnProperty($1)) {
+			${3}
+		}
+	}
+# Object Method
+snippet :f
+	${1:method_name}: function(${2:attribute}) {
+		${4}
+	}${3:,}
+
+# Object Method
+snippet f:
+	${1:method_name}: function(${2:attribute}) {
+		${4}
+	}${3:,}
+
+# setTimeout function
+snippet sett
+	setTimeout(function() {
+		${3}
+	}${2}, ${1:10});
+# setInterval function
+snippet seti
+	setInterval(function() {
+		${3}
+	}${2}, ${1:10});
+# nodeunit
+snippet utest
+	exports.test${1} = function(test) {
+		test.expect(1);
+		${2}
+		test.done();
+	};
+
