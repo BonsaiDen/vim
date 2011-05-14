@@ -6,6 +6,7 @@ set number
 
 let g:superTabDefaultCompletionType = "context"
 let g:syntastic_stl_format = '[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
+let g:syntastic_auto_loc_list = 2 "auto close
 
 " Filetype stuff
 filetype on
