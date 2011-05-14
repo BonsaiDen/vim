@@ -48,6 +48,16 @@ runtime! syntax_checkers/*.vim
 
 "refresh and redraw all the error info for this buf when saving or reading
 autocmd bufreadpost,bufwritepost * call s:UpdateErrors()
+autocmd bufwinenter,bufwinleave * call s:HideErrors()
+
+function! s:HideErrors()
+    if &buftype == 'quickfix'
+        return
+    elseif g:syntastic_auto_loc_list == 2
+        lclose
+    endif
+endfunction
+
 function! s:UpdateErrors()
     if &buftype == 'quickfix'
         return
