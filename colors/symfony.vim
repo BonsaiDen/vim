@@ -27,6 +27,7 @@ highlight Question cterm=bold ctermfg=46 gui=bold guifg=Green
 
 " Split area area
 highlight StatusLine cterm=bold,reverse gui=bold,reverse
+highlight StatusError cterm=bold,reverse ctermfg=Red gui=bold,reverse
 highlight StatusLineNC cterm=reverse gui=reverse
 highlight VertSplit ctermfg=255 ctermbg=255  gui=reverse
 highlight WildMenu ctermfg=0 ctermbg=226 guifg=Black guibg=Yellow

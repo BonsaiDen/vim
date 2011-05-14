@@ -5,6 +5,7 @@ set guifont=Monospace\ 8
 set number
 
 let g:superTabDefaultCompletionType = "context"
+let g:syntastic_stl_format = '[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
 
 " Filetype stuff
 filetype on
@@ -29,6 +30,7 @@ set backspace=eol,start,indent
 
 " Search and Highlighting
 set wrapscan
+set magic
 set showmatch
 set hlsearch
 set incsearch
@@ -44,6 +46,9 @@ set laststatus=2
 set hidden
 set nolazyredraw
 set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
+set statusline+=%=
+set statusline+=%#statuserror#
+set statusline+=%{SyntasticStatuslineFlag()}
 set scrolloff=4
 set wildmenu
 set fillchars=""
@@ -72,6 +77,7 @@ nnoremap <silent> <c-o> o<ESC>k
 nnoremap <silent> ü '.
 
 nnoremap <silent> <C-t> :CommandT<CR>
+nnoremap <silent> <C-e> :Errors<CR>
 nnoremap <silent> <S-k> 3k
 vnoremap <silent> <S-k> 3k
 nnoremap <silent> <S-j> 3j
@@ -118,6 +124,8 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:bufExplorerSortBy = "name"
 
 autocmd BufRead,BufNew :call UMiniBufExplorer
+autocmd BufRead,BufNew,BufDelete :mks ~/.vimsession
+
 
 " Strip trailing whitespace on save
 fun! <SID>StripTrailingWhitespaces()
