@@ -19,14 +19,28 @@ set ofu=javascript#Complete
 set undolevels=150
 set nocompatible
 set autoindent
-set smarttab
 set backspace=2
+
+" smarttabs
+set smarttab
+
+" when auto-indenting, indent by this much
 set shiftwidth=4
+
+" expand tabs to 4 spaces
 set tabstop=4
+
+" turn tabkeypresses into spaces
 set expandtab
+
+" treate tabkey as 4 spaces but respect hard hard tabs
+set softtabstop=4
+
 set nowrap
 set equalalways
 set mouse=a
+
+" Jump over everything with backspace
 set backspace=eol,start,indent
 
 " Search and Highlighting
@@ -43,13 +57,17 @@ set nofoldenable
 set ch=2
 set cpoptions+=$
 set virtualedit=all
-set laststatus=2
 set hidden
 set nolazyredraw
+
+" Statusline setup
+set laststatus=2
 set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 set statusline+=%=
 set statusline+=%#statuserror#
 set statusline+=%{SyntasticStatuslineFlag()}
+
+" Keep 4 lines top/bottom when scrolling
 set scrolloff=4
 set wildmenu
 set fillchars=""
@@ -62,38 +80,59 @@ set nobackup
 set nowb
 set noswapfile
 
-" Text options
-"set textwidth=80
-
-" Mappings
+" Quick Mappings
 nnoremap <silent> <F5> :TlistToggle<CR>
 nnoremap <silent> <F4> :nohl<CR>
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :so ~/.vimrc<CR>
-inoremap ß {<CR>}<ESC>ko<Tab>
+
+" ESC is aweful to hit, Shift+3 is way more convinient on a GER layout
 noremap! <silent> § <ESC>
 vnoremap <silent> § <ESC>
 snoremap <silent> § <ESC>
+
+" Remap {
+"   
+" } to .. you see :)
+inoremap ß {<CR>}<ESC>ko<Tab>
+
+" Inserting blank lines is useful too
 nnoremap <silent> <c-o> o<ESC>k
+
+" Jump to last edited line, useful at times
 nnoremap <silent> ü '.
 
+" Command T and syntastic Error list
 nnoremap <silent> <C-t> :CommandT<CR>
 nnoremap <silent> <C-e> :Errors<CR>
+
+" Speedier movements
 nnoremap <silent> <S-k> 3k
 vnoremap <silent> <S-k> 3k
 nnoremap <silent> <S-j> 3j
 vnoremap <silent> <S-j> 3j
 
-" I always manage to hit 
+" I always manage to hit these at the wrong time so fix it
 nnoremap <silent> + <nop>
 command! W w
 command! E e
 
+" Surround plugin
+nmap ä cs
+nmap ö ysw
+
+" Remap umlauts for fast insertion 
+inoremap ö []<ESC>i
+inoremap ä {}<ESC>i
+inoremap Ö -><ESC>a
+
+" Highlight the cursorline
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 autocmd BufWinEnter * setlocal cursorline
 autocmd BufWinLeave * setlocal nocursorline
 
+" stupid commenting... need a plugin for this
 function! Komment()
   if getline(".") =~ '^\/\/'
     let hls=@/
@@ -108,13 +147,6 @@ endfunction
 
 map <silent> m :call Komment()<CR>
 
-"nnoremap <silent> <C-n> 0gt
-"nnoremap <silent> <C-b> 0gT
-
-"nnoremap <C-e> :e<space>
-"nnoremap <C-w> :w<space>
-
-
 " MiniBuf
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 2
@@ -125,7 +157,7 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:bufExplorerSortBy = "name"
 
 autocmd BufRead,BufNew :call UMiniBufExplorer
-autocmd BufRead,BufNew,BufDelete :mks ~/.vimsession
+"autocmd BufRead,BufNew,BufDelete :mks ~/.vimsession
 
 
 " Strip trailing whitespace on save
@@ -133,8 +165,12 @@ fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
     %s/\s\+$//e
+    " active deactive for tab crap
+    "%s/\s\s\s\s/\t/ge
     call cursor(l, c)
 endfun
+
+autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
 
 " Move lines
 function! s:swap_lines(n1, n2)
@@ -167,15 +203,6 @@ endfunction
 "nnoremap <silent> ä :call <SID>swap_up()<CR>
 "nnoremap <silent> ö :call <SID>swap_down()<CR>
 
-nmap ä cs
-nmap ö ysw
-inoremap ö []<ESC>i
-inoremap ä {}<ESC>i
-inoremap Ö -><ESC>a
-
-" Truncate Lines on write
-autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
-
 " Execute via Shebang
 map <C-X> :call CallInterpreter()<CR>
 
@@ -194,8 +221,6 @@ fun! CallInterpreter()
         exec("! ".b:interpreter." %")
     endif
 endfun
-
-"autocmd BufEnter * cd %:p:h
 
 " Per file type
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
