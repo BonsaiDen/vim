@@ -16,6 +16,8 @@ if exists("g:loaded_syntastic_plugin")
     finish
 endif
 let g:loaded_syntastic_plugin = 1
+let s:syntastic_loclist_open = 0
+let s:opening = 0
 
 let s:running_windows = has("win16") || has("win32") || has("win64")
 
@@ -53,8 +55,15 @@ autocmd bufwinenter,bufwinleave * call s:HideErrors()
 function! s:HideErrors()
     if &buftype == 'quickfix'
         return
+
+    elseif s:opening == 1
+        return
+
     elseif g:syntastic_auto_loc_list == 2
-        lclose
+        if s:syntastic_loclist_open == 1
+            let s:syntastic_loclist_open = 0
+            lclose
+        endif
     endif
 endfunction
 
@@ -62,6 +71,7 @@ function! s:UpdateErrors()
     if &buftype == 'quickfix'
         return
     endif
+
     call s:CacheErrors()
 
     if g:syntastic_enable_signs
@@ -70,22 +80,13 @@ function! s:UpdateErrors()
 
     if s:BufHasErrorsOrWarningsToDisplay()
         call setloclist(0, b:syntastic_loclist)
-        if g:syntastic_auto_jump
-            silent!ll
-        endif
+
     elseif g:syntastic_auto_loc_list == 2
+        call setloclist(0, b:syntastic_loclist)
+        let s:syntastic_loclist_open = 0
         lclose
     endif
 
-    if g:syntastic_auto_loc_list == 1
-        if s:BufHasErrorsOrWarningsToDisplay()
-            call s:ShowLocList()
-        else
-            "TODO: this will close the loc list window if one was opened by
-            "something other than syntastic
-            lclose
-        endif
-    endif
 endfunction
 
 "detect and cache all syntax errors in this buffer
@@ -193,11 +194,25 @@ endfunction
 function! s:ShowLocList()
     if exists("b:syntastic_loclist")
         let num = winnr()
-        lopen
-        if num != winnr()
-            wincmd p
+
+        if s:syntastic_loclist_open == 0
+            let s:opening = 1
+            if s:BufHasErrorsOrWarningsToDisplay()
+                call setloclist(0, b:syntastic_loclist)
+                let s:syntastic_loclist_open = 1
+                lopen
+                if num != winnr()
+                    wincmd p
+                endif
+            endif
+
+        else
+            let s:syntastic_loclist_open = 0
+            lclose
         endif
     endif
+    let s:opening = 0
+
 endfunction
 
 command Errors call s:ShowLocList()
