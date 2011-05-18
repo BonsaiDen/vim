@@ -91,6 +91,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   else
     command -nargs=+ HiLink hi def link <args>
   endif
+  HiLink javaScript         		Normal
   HiLink javaScriptNode                 Function 
   HiLink javaScriptComment		Comment
   HiLink javaScriptLineComment		Comment
