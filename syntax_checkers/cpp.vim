@@ -25,7 +25,7 @@ if !executable('g++')
 endif
 
 function! SyntaxCheckers_cpp_GetLocList()
-    let makeprg = 'g++ -fsyntax-only '.shellescape(expand('%'))
+    let makeprg = 'g++ -fsyntax-only -Wall -pedantic '.shellescape(expand('%'))
     let errorformat =  '%-G%f:%s:,%f:%l:%c: %m,%f:%l: %m'
 
     if expand('%') =~? '\%(.h\|.hpp\|.hh\)$'

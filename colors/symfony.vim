@@ -40,9 +40,9 @@ highlight DiffText ctermfg=254 ctermbg=124 guifg=#E6E1DC guibg=#b00000
 
 " Cursor
 highlight CursorColumn ctermbg=241 guibg=Grey40
-highlight CursorLine ctermbg=234 guibg=#000000 cterm=NONE gui=NONE
+highlight CursorLine ctermbg=235 guibg=#000000 cterm=NONE gui=NONE
 highlight Cursor ctermfg=0 ctermbg=15 guifg=#000000 guibg=#FFFFFF
-highlight lCursor ctermfg=15 ctermbg=233 guifg=bg guibg=fg
+highlight lCursor ctermfg=0 ctermbg=235 guifg=bg guibg=fg
 
 " Fold
 highlight Folded ctermfg=236 ctermbg=248 guifg=#333333 guibg=DarkGrey
@@ -86,12 +86,13 @@ highlight SpellRare cterm=underline ctermfg=168 gui=underline guifg=#D75F87
 " Other
 highlight Directory ctermfg=51 guifg=Cyan
 highlight LineNr ctermfg=16  ctermbg=238 guifg=#2B2B2B guibg=#C0C0FF
+highlight ColorColumn ctermbg=234 guibg=#C0C0FF
 highlight NonText ctermfg=239 ctermbg=233 guifg=#505050 guibg=#222222
 highlight SpecialKey ctermfg=60 guifg=lightslategrey
 highlight Title cterm=bold ctermfg=15 gui=bold guifg=#FFFFFF
 highlight Visual ctermbg=239 guibg=#5A647E gui=NONE
 highlight MatchParen ctermfg=15 ctermbg=23 guifg=#FFFFFF guibg=#005f5f
-highlight SignColumn ctermfg=51 ctermbg=250 guifg=Cyan guibg=Grey
+highlight SignColumn ctermfg=16 ctermbg=238 guifg=Cyan guibg=Grey
 highlight Structure ctermfg=221 guifg=#ffcc66
 highlight TabLineFill cterm=reverse gui=reverse
 highlight TabLine cterm=underline ctermbg=248 gui=underline guibg=DarkGrey

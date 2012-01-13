@@ -29,16 +29,24 @@ if version < 600 && exists("javaScript_fold")
 endif
 
 
-syn keyword javaScriptCommentTodo      TODO FIXME XXX TBD contained
-syn match   javaScriptLineComment      "\/\/.*" contains=@Spell,javaScriptCommentTodo
-syn match   javaScriptCommentSkip      "^[ \t]*\*\($\|[ \t]\+\)"
-syn region  javaScriptComment	       start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
 syn match   javaScriptSpecial	       "\\\d\d\d\|\\."
 syn region  javaScriptStringD	       start=+"+  skip=+\\\\\|\\"+  end=+"\|$+	contains=javaScriptSpecial,@htmlPreproc
 syn region  javaScriptStringS	       start=+'+  skip=+\\\\\|\\'+  end=+'\|$+	contains=javaScriptSpecial,@htmlPreproc
-
-syn match   javaScriptSpecialCharacter "'\\.'"
 syn match   javaScriptNumber	       "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+syn match   javaScriptSpecialCharacter "'\\.'"
+
+syn match   javascriptNormal           "\."
+syn keyword javaScriptCommentTodo      TODO FIXME XXX TBD FIX contained
+syn match   javaScriptDocMethod        "#[^ }]\+" contained
+syn match   javaScriptDocFlag          "?" contained
+syn match   javaScriptDocTypes         "{[a-zA-Z.|?#\s]\+}" contained contains=javaScriptDocFlag,javaScriptDocMethod
+syn match   javaScriptDocVar           "@[a-zA-Z_\.]\+" contained
+syn match   javaScriptDocTag           "#[^ (#]\+([^)]\+)\|#[^ (#]\+" contained contains=javaScriptDocTypes,javaScriptDocVar,javaScriptStringS,javaScriptStringD,javaScriptNumber,javaScriptNormal
+
+syn match   javaScriptLineComment      "\/\/.*" contains=@Spell,javaScriptCommentTodo,javaScriptDocInfo
+syn match   javaScriptCommentSkip      "^[ \t]*\*\($\|[ \t]\+\)"
+syn region  javaScriptComment	       start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo,javaScriptDocTypes,javaScriptDocVar,javaScriptDocTag
+
 syn region  javaScriptRegexpString     start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
 
 syn keyword javaScriptNode              require
@@ -50,7 +58,7 @@ syn keyword javaScriptType		Array Boolean Date Function Number Object String Reg
 syn keyword javaScriptStatement		return with
 syn keyword javaScriptBoolean		true false
 syn keyword javaScriptNull		null undefined
-syn keyword javaScriptIdentifier	arguments this var that
+syn keyword javaScriptIdentifier	arguments this var that self
 syn keyword javaScriptLabel		case default
 syn keyword javaScriptException		try catch finally throw
 syn keyword javaScriptMessage		alert confirm prompt status
@@ -91,11 +99,16 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   else
     command -nargs=+ HiLink hi def link <args>
   endif
-  HiLink javaScript         		Normal
+  HiLink javaScriptNormal                 Normal 
   HiLink javaScriptNode                 Function 
   HiLink javaScriptComment		Comment
   HiLink javaScriptLineComment		Comment
   HiLink javaScriptCommentTodo		Todo
+  HiLink javaScriptDocVar		Member
+  HiLink javaScriptDocTypes		Type
+  HiLink javaScriptDocMethod		Keyword
+  HiLink javaScriptDocFlag		Keyword
+  HiLink javaScriptDocTag		Identifier
   HiLink javaScriptSpecial		Special
   HiLink javaScriptStringS		String
   HiLink javaScriptStringD		String

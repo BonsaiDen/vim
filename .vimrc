@@ -1,25 +1,51 @@
+" Vundle
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+Bundle 'Lokaltog/vim-powerline'
+
+
+filetype on
+
 " Basics
 set t_Co=256
 colorscheme symfony
 set guifont=Monospace\ 8
 set number
+syntax enable
 
+" Plugin configs
 let g:superTabDefaultCompletionType = "context"
 let g:syntastic_stl_format = '[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
 let g:syntastic_auto_loc_list = 2 "auto close
+let g:syntastic_cpp_check_header = 1
+let NERDTreeIgnore = ['\.pyc$', '\.h\.gch$', '\.o$']
+
 
 " Filetype stuff
-filetype on
 filetype plugin on
 set ofu=syntaxcomplete#Complete
 set ofu=javascript#Complete
 
-"
+
 " Smart tabbing / autoindenting
-set undolevels=150
-set nocompatible
+set undolevels=500
 set autoindent
 set backspace=2
+
+" No error bells
+set noerrorbells
+set visualbell
+set t_vb=
 
 " smarttabs
 set smarttab
@@ -38,7 +64,8 @@ set softtabstop=4
 
 set nowrap
 set equalalways
-set mouse=a
+set mouse=n
+set cc=80
 
 " Jump over everything with backspace
 set backspace=eol,start,indent
@@ -49,29 +76,36 @@ set magic
 set showmatch
 set hlsearch
 set incsearch
-set ignorecase smartcase
+set ignorecase 
+set smartcase
 set enc=utf-8
 set nofoldenable
 
 " General Options
-set ch=2
-set cpoptions+=$
+
+" fast terminal
+set ttyfast 
+
+set nostartofline
 set virtualedit=all
 set hidden
-set nolazyredraw
+
+" Don't redraw while in macros
+set lazyredraw
 
 " Statusline setup
 set laststatus=2
-set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
-set statusline+=%=
-set statusline+=%#statuserror#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
+"set statusline+=%=
+"set statusline+=%#statuserror#
+"set statusline+=%{SyntasticStatuslineFlag()}
 
 " Keep 4 lines top/bottom when scrolling
 set scrolloff=4
 set wildmenu
 set fillchars=""
 set clipboard=unnamed
+let g:clipbrdDefaultReg = '+'
 set shortmess+=I
 set spellfile=~/.vim/dict.add
 
@@ -81,10 +115,15 @@ set nowb
 set noswapfile
 
 " Quick Mappings
-nnoremap <silent> <F5> :TlistToggle<CR>
+"nnoremap <silent> <F5> :TlistToggle<CR>
 nnoremap <silent> <F4> :nohl<CR>
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :so ~/.vimrc<CR>
+
+" Print out highlight group for colorschemes
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " ESC is aweful to hit, Shift+3 is way more convinient on a GER layout
 noremap! <silent> § <ESC>
@@ -118,34 +157,26 @@ command! W w
 command! E e
 
 " Surround plugin
-nmap ä cs
 nmap ö ysw
+
+nmap Ü viB
+nmap Ä vi]
 
 " Remap umlauts for fast insertion 
 inoremap ö []<ESC>i
 inoremap ä {}<ESC>i
 inoremap Ö -><ESC>a
 
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+map N Nzz
+map n nzz
+
 " Highlight the cursorline
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 autocmd BufWinEnter * setlocal cursorline
 autocmd BufWinLeave * setlocal nocursorline
-
-" stupid commenting... need a plugin for this
-function! Komment()
-  if getline(".") =~ '^\/\/'
-    let hls=@/
-    s/^\/\///e
-    let @/=hls
-  else
-    let hls=@/
-    s/^/\/\//e
-    let @/=hls
-  endif
-endfunction
-
-map <silent> m :call Komment()<CR>
 
 " MiniBuf
 let g:miniBufExplModSelTarget = 1
@@ -172,37 +203,6 @@ endfun
 
 autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
 
-" Move lines
-function! s:swap_lines(n1, n2)
-    let line1 = getline(a:n1)
-    let line2 = getline(a:n2)
-    call setline(a:n1, line2)
-    call setline(a:n2, line1)
-endfunction
-
-function! s:swap_up()
-    let n = line('.')
-    if n == 1
-        return
-    endif
-
-    call s:swap_lines(n, n - 1)
-    exec n - 1
-endfunction
-
-function! s:swap_down()
-    let n = line('.')
-    if n == line('$')
-        return
-    endif
-
-    call s:swap_lines(n, n + 1)
-    exec n + 1
-endfunction
-
-"nnoremap <silent> ä :call <SID>swap_up()<CR>
-"nnoremap <silent> ö :call <SID>swap_down()<CR>
-
 " Execute via Shebang
 map <C-X> :call CallInterpreter()<CR>
 
@@ -226,4 +226,46 @@ endfun
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
 autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal tags=./tags,~/.vim/tags/javascript/tags
+
+" Leader key stuff
+let mapleader = ","
+
+"nmap <silent> <Leader>bd :bd!<CR>
+
+"nmap <Leader>ad <Plug>VCSAdd
+"nmap <Leader>an <Plug>VCSAnnotate
+"nmap <Leader>ci <Plug>VCSCommit
+"nmap <Leader>lo <Plug>VCSLog
+"nmap <Leader>st <Plug>VCSStatus
+"nmap <Leader>re <Plug>VCSRevert
+"nmap <Leader>di <Plug>VCSVimDiff
+"
+
+"   <Leader>ca VCSAdd
+"   <Leader>cn VCSAnnotate
+"   <Leader>cN VCSAnnotate!
+"   <Leader>cc VCSCommit
+"   <Leader>cD VCSDelete
+"   <Leader>cd VCSDiff
+"   <Leader>cg VCSGotoOriginal
+"   <Leader>cG VCSGotoOriginal!
+"   <Leader>ci VCSInfo
+"   <Leader>cl VCSLog
+"   <Leader>cL VCSLock
+"   <Leader>cr VCSReview
+"   <Leader>cs VCSStatus
+"   <Leader>cu VCSUpdate
+"   <Leader>cU VCSUnlock
+"   <Leader>cv VCSVimDiff
+
+function! s:onStart()
+    :NERDTree
+    wincmd p
+    wincmd v
+
+endfunction
+
+function! g:Setup()
+    autocmd VimEnter * call s:onStart()
+endfunction
 
