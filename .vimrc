@@ -19,7 +19,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle "wincent/Command-T.git"
-"Bundle "surround.vim"
+Bundle "msanders/snipmate.vim"
 
 filetype on
 
