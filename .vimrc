@@ -106,7 +106,7 @@ set laststatus=2
 set scrolloff=4
 set wildmenu
 set fillchars=""
-set clipboard=unnamed
+set clipboard=unnamedplus
 let g:clipbrdDefaultReg = '+'
 set shortmess+=I
 set spellfile=~/.vim/dict.add
