@@ -14,7 +14,10 @@ Bundle 'gmarik/vundle'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
+Bundle 'sjl/gundo.vim'
 
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 
 filetype on
 
@@ -33,11 +36,13 @@ let g:syntastic_cpp_check_header = 1
 let NERDTreeIgnore = ['\.pyc$', '\.h\.gch$', '\.o$']
 let NERDTreeShowBookmarks=1
 
+let g:fuf_buffer_keyDelete = '<C-d>'
+let g:gundo_right = 1
+
 " Filetype stuff
 filetype plugin on
 set ofu=syntaxcomplete#Complete
 set ofu=javascript#Complete
-
 
 " Smart tabbing / autoindenting
 set undolevels=500
@@ -97,10 +102,6 @@ set lazyredraw
 
 " Statusline setup
 set laststatus=2
-"set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
-"set statusline+=%=
-"set statusline+=%#statuserror#
-"set statusline+=%{SyntasticStatuslineFlag()}
 
 " Keep 4 lines top/bottom when scrolling
 set scrolloff=4
@@ -117,12 +118,12 @@ set nowb
 set noswapfile
 
 " Quick Mappings
-"nnoremap <silent> <F5> :TlistToggle<CR>
 nnoremap <silent> <F4> :nohl<CR>
+nnoremap <silent> <F5> :GundoToggle<CR>
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :so ~/.vimrc<CR>
 
-" Print out highlight group for colorschemes
+" Print out highlight group for colorscheme editing
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
@@ -144,7 +145,8 @@ nnoremap <silent> <c-o> o<ESC>k
 nnoremap <silent> ü '.
 
 " Command T and syntastic Error list
-nnoremap <silent> <C-t> :CommandT<CR>
+nmap <silent> <C-t> :CommandT<CR>
+nnoremap <silent> <S-t> :FufBuffer<CR>
 nnoremap <silent> <C-e> :Errors<CR>
 
 " Speedier movements
@@ -175,25 +177,17 @@ map N Nzz
 map n nzz
 map * *N
 
-
 " Highlight the cursorline
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 autocmd BufWinEnter * setlocal cursorline
 autocmd BufWinLeave * setlocal nocursorline
 
-" MiniBuf
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplorerMoreThanOne = 2
-let g:miniBufExplModSelTarget = 0
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplMapWindowNavVim = 1
-
-let g:bufExplorerSortBy = "name"
-
-autocmd BufRead,BufNew :call UMiniBufExplorer
-"autocmd BufRead,BufNew,BufDelete :mks ~/.vimsession
-
+" Get rid of the window command prefix
+noremap <C-J> <C-W>j
+noremap <C-K> <C-W>k
+noremap <C-H> <C-W>h
+noremap <C-L> <C-W>l
 
 " Strip trailing whitespace on save
 fun! <SID>StripTrailingWhitespaces()
@@ -246,12 +240,10 @@ nmap <silent> <Leader>bd :bd!<CR>
 map q <Nop>
 nmap <silent> <Leader>q <C-w>c<CR>
 
-
 function! s:onStart()
     :NERDTree
     wincmd p
     wincmd v
-
 endfunction
 
 function! g:Setup()
