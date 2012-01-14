@@ -18,6 +18,8 @@ Bundle 'sjl/gundo.vim'
 
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle "wincent/Command-T.git"
+"Bundle "surround.vim"
 
 filetype on
 
@@ -36,8 +38,11 @@ let g:syntastic_cpp_check_header = 1
 let NERDTreeIgnore = ['\.pyc$', '\.h\.gch$', '\.o$']
 let NERDTreeShowBookmarks=1
 
+let g:SuperTabMappingBackward = '<S-tab>'
 let g:fuf_buffer_keyDelete = '<C-d>'
 let g:gundo_right = 1
+let g:CommandTMaxHeight = 20
+
 
 " Filetype stuff
 filetype plugin on
@@ -106,6 +111,7 @@ set laststatus=2
 " Keep 4 lines top/bottom when scrolling
 set scrolloff=4
 set wildmenu
+set wildignore+=*.o,*.obj,.git,.hg
 set fillchars=""
 set clipboard=unnamedplus
 let g:clipbrdDefaultReg = '+'
@@ -163,12 +169,13 @@ command! E e
 " Surround plugin
 nmap ö ysw
 
+" Quicker selects
 nmap Ü viB
 nmap Ä vi]
 
 " Remap umlauts for fast insertion 
-inoremap ö []<ESC>i
-inoremap ä {}<ESC>i
+imap ö [
+imap ä {
 inoremap Ö -><ESC>a
 
 " Search mappings: These will make it so that going to the next one in a

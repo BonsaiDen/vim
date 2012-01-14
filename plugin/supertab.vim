@@ -90,7 +90,7 @@ set cpo&vim
     let g:SuperTabMappingForward = '<tab>'
   endif
   if !exists("g:SuperTabMappingBackward")
-    let g:SuperTabMappingBackward = '<a-tab>'
+    let g:SuperTabMappingBackward = '<S-tab>'
   endif
 
   if !exists("g:SuperTabMappingTabLiteral")
