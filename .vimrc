@@ -12,6 +12,8 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-fugitive'
 
 
 filetype on
@@ -29,7 +31,7 @@ let g:syntastic_stl_format = '[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
 let g:syntastic_auto_loc_list = 2 "auto close
 let g:syntastic_cpp_check_header = 1
 let NERDTreeIgnore = ['\.pyc$', '\.h\.gch$', '\.o$']
-
+let NERDTreeShowBookmarks=1
 
 " Filetype stuff
 filetype plugin on
@@ -171,6 +173,8 @@ inoremap Ö -><ESC>a
 " search will center on the line it's found in.
 map N Nzz
 map n nzz
+map * *N
+
 
 " Highlight the cursorline
 autocmd WinEnter * setlocal cursorline
@@ -230,33 +234,18 @@ autocmd Filetype javascript setlocal tags=./tags,~/.vim/tags/javascript/tags
 " Leader key stuff
 let mapleader = ","
 
-"nmap <silent> <Leader>bd :bd!<CR>
+" ,f ,w etc
+let g:EasyMotion_leader_key = '<Leader>'
 
-"nmap <Leader>ad <Plug>VCSAdd
-"nmap <Leader>an <Plug>VCSAnnotate
-"nmap <Leader>ci <Plug>VCSCommit
-"nmap <Leader>lo <Plug>VCSLog
-"nmap <Leader>st <Plug>VCSStatus
-"nmap <Leader>re <Plug>VCSRevert
-"nmap <Leader>di <Plug>VCSVimDiff
-"
+nmap <silent> <Leader>gd :Gdiff<CR>
+nmap <silent> <Leader>gc :Gcommit<CR>
+nmap <silent> <Leader>gs :Gstatus<CR>
+nmap <silent> <Leader>gb :Gblame<CR>
+nmap <silent> <Leader>bd :bd!<CR>
 
-"   <Leader>ca VCSAdd
-"   <Leader>cn VCSAnnotate
-"   <Leader>cN VCSAnnotate!
-"   <Leader>cc VCSCommit
-"   <Leader>cD VCSDelete
-"   <Leader>cd VCSDiff
-"   <Leader>cg VCSGotoOriginal
-"   <Leader>cG VCSGotoOriginal!
-"   <Leader>ci VCSInfo
-"   <Leader>cl VCSLog
-"   <Leader>cL VCSLock
-"   <Leader>cr VCSReview
-"   <Leader>cs VCSStatus
-"   <Leader>cu VCSUpdate
-"   <Leader>cU VCSUnlock
-"   <Leader>cv VCSVimDiff
+map q <Nop>
+nmap <silent> <Leader>q <C-w>c<CR>
+
 
 function! s:onStart()
     :NERDTree
