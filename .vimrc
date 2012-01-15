@@ -20,6 +20,8 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle "wincent/Command-T.git"
 Bundle "msanders/snipmate.vim"
+"Bundle "surround.vim"
+Bundle "plasticboy/vim-markdown"
 
 filetype on
 
@@ -58,6 +60,9 @@ set backspace=2
 set noerrorbells
 set visualbell
 set t_vb=
+
+" Show tab and eol chars
+set listchars=tab:▸\ ,eol:¬
 
 " smarttabs
 set smarttab

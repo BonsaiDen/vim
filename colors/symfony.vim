@@ -87,8 +87,8 @@ highlight SpellRare cterm=underline ctermfg=168 gui=underline guifg=#D75F87
 highlight Directory ctermfg=51 guifg=Cyan
 highlight LineNr ctermfg=16  ctermbg=238 guifg=#2B2B2B guibg=#C0C0FF
 highlight ColorColumn ctermbg=234 guibg=#C0C0FF
-highlight NonText ctermfg=239 ctermbg=233 guifg=#505050 guibg=#222222
-highlight SpecialKey ctermfg=60 guifg=lightslategrey
+highlight NonText ctermfg=235 ctermbg=233 guifg=#505050 guibg=#222222
+highlight SpecialKey ctermfg=235 guifg=lightslategrey
 highlight Title cterm=bold ctermfg=15 gui=bold guifg=#FFFFFF
 highlight Visual ctermbg=239 guibg=#5A647E gui=NONE
 highlight MatchParen ctermfg=15 ctermbg=23 guifg=#FFFFFF guibg=#005f5f
