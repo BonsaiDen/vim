@@ -34,7 +34,7 @@ syntax enable
 
 " Plugin configs
 let g:superTabDefaultCompletionType = "context"
-let g:syntastic_stl_format = '[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
+let g:syntastic_stl_format = ' %E{%e ERRORS LN %fe} ' "[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
 let g:syntastic_auto_loc_list = 2 "auto close
 let g:syntastic_cpp_check_header = 1
 let NERDTreeIgnore = ['\.pyc$', '\.h\.gch$', '\.o$']

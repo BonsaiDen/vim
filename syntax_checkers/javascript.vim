@@ -1,35 +1,33 @@
-"============================================================================
-"File:        javascript.vim
-"Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Martin Grenfell <martin.grenfell at gmail dot com>
-"License:     This program is free software. It comes without any warranty,
-"             to the extent permitted by applicable law. You can redistribute
-"             it and/or modify it under the terms of the Do What The Fuck You
-"             Want To Public License, Version 2, as published by Sam Hocevar.
-"             See http://sam.zoy.org/wtfpl/COPYING for more details.
-"
-"============================================================================
 if exists("loaded_javascript_syntax_checker")
     finish
 endif
 let loaded_javascript_syntax_checker = 1
 
-"bail if the user doesnt have jsl installed
-if !executable("jsl")
+"bail if the user doesnt have jshint installed
+if !executable("jshint")
     finish
 endif
 
-if !exists("g:syntastic_jsl_conf")
-    let g:syntastic_jsl_conf = ""
+if !exists("g:syntastic_jshint_reporter")
+    let g:syntastic_jshint_reporter = "~/.vim/vim_reporter.js"
+endif
+
+if !exists("g:syntastic_jshint_conf")
+    let g:syntastic_jshint_conf = "~/.vim/vim_jshint.json"
 endif
 
 function! SyntaxCheckers_javascript_GetLocList()
-    if empty(g:syntastic_jsl_conf)
-        let jslconf = ""
+
+    if empty(g:syntastic_jshint_conf)
+        let jsconf = ""
     else
-        let jslconf = " -conf " . g:syntastic_jsl_conf
+        let jsconf = " --config " . g:syntastic_jshint_conf
     endif
-    let makeprg = "jsl" . jslconf . " -nologo -nofilelisting -nosummary -nocontext -conf ~/.vim/jsl.conf -process ".shellescape(expand('%'))
-    let errorformat='%W%f(%l): lint warning: %m,%-Z%p^,%W%f(%l): warning: %m,%-Z%p^,%E%f(%l): SyntaxError: %m,%-Z%p^,%-G'
+
+    let makeprg = "jshint ".shellescape(expand('%'))." --reporter ".g:syntastic_jshint_reporter.jsconf
+
+    let errorformat='%f @ %l:%c %m'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+
 endfunction
+
