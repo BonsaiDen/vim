@@ -10,5 +10,5 @@ in the repository root which converts a `256` colors scheme to a GUI one.
 
 ### Screenshot
 
-![Layout](http://dl.dropbox.com/2332843/vim.png)
+![Layout](http://dl.dropbox.com/u/2332843/vim.png)
 
