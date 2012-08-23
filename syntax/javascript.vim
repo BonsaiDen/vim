@@ -62,7 +62,7 @@ syn keyword javaScriptIdentifier	arguments this var that self
 syn keyword javaScriptLabel		case default
 syn keyword javaScriptException		try catch finally throw
 syn keyword javaScriptMessage		alert confirm prompt status
-syn keyword javaScriptGlobal		global window 
+syn keyword javaScriptGlobal		global window assert
 syn keyword javaScriptMember		location prototype constructor toString call apply hasOwnProperty setTimeout clearTimeout setInterval clearInterval isNaN
 syn keyword javaScriptDeprecated	escape unescape
 syn keyword javaScriptReserved		abstract boolean byte char class const debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile 
@@ -120,7 +120,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptBranch		Conditional
   HiLink javaScriptOperator		Operator
   HiLink javaScriptType			Type
-  HiLink javaScriptStatement		Statement
+  HiLink javaScriptStatement		Conditional
   HiLink javaScriptFunction		Function
   HiLink javaScriptBraces		Function
   HiLink javaScriptError		Error

@@ -15,20 +15,9 @@ Bundle 'BonsaiDen/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
-
-"Bundle 'acp'
-
-"Bundle 'L9'
-"Bundle 'FuzzyFinder'
-"Bundle "wincent/Command-T.git"
 Bundle "msanders/snipmate.vim"
-"Bundle "surround.vim"
-Bundle "plasticboy/vim-markdown"
-"Bundle "sickill/vim-pasta"
-Bundle "reinh/vim-makegreen"
-Bundle "lambdalisue/nodeunit.vim"
+Bundle "tpope/vim-markdown"
 Bundle "kien/ctrlp.vim"
-"Bundle "numbers"
 
 filetype on
 
@@ -38,8 +27,6 @@ colorscheme symfony
 "set guifont=Monospace\ 8
 set number
 syntax enable
-
-
 
 " Plugin configs
 let g:superTabDefaultCompletionType = "context"
@@ -214,15 +201,12 @@ inoremap Ö -><ESC>a
 vnoremap <silent> > >gv
 vnoremap <silent> < <gv
 
-
-
-
-
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
-map N Nzz
-map n nzz
-map * *N
+" use nmap otherwise insert mode with snipmate breaks on n / N / *
+nmap N Nzz
+nmap n nzz
+nmap * *N
 
 " Highlight the cursorline
 autocmd WinEnter * setlocal cursorline

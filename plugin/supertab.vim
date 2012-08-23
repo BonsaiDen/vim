@@ -595,6 +595,7 @@ endfunction " }}}
     " other functions mapped to <cr> etc. (like endwise.vim)
     inoremap <cr> <c-r>=<SID>SelectCompletion()<cr>
     function s:SelectCompletion()
+      echo "do completion"
       return pumvisible() ? "\<space>\<bs>" : "\<cr>"
     endfunction
   endif

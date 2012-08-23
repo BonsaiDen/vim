@@ -161,7 +161,6 @@ endif
 syn keyword htmlTagName         contained noscript
 syn keyword htmlSpecialTagName  contained script style
 if main_syntax != 'java' || exists("java_javascript")
-echo "javascript"
   " JAVA SCRIPT
   syn include @htmlJavaScript syntax/javascript.vim
   unlet b:current_syntax
