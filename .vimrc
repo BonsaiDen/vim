@@ -126,8 +126,11 @@ set scrolloff=4
 set wildmenu
 set wildignore+=*.o,*.obj
 set fillchars=""
+
+" fix clipboad mess under ubuntu needs 7.3
 set clipboard=unnamedplus
 let g:clipbrdDefaultReg = '+'
+
 set shortmess+=I
 set spellfile=~/.vim/dict.add
 
@@ -170,8 +173,8 @@ set foldlevel=1         "this is just what i use
 
 " Command T and syntastic Error list
 nmap <silent> <C-o> :CtrlPBuffer<CR>
-nmap <silent> <C-i> :CtrlPBuffer<CR>
-nnoremap <silent> <S-t> :FufBuffer<CR>
+"nmap <silent> <C-i> :CtrlPBuffer<CR>
+"nnoremap <silent> <S-t> :FufBuffer<CR>
 nnoremap <silent> <C-e> :Errors<CR>
 
 " Speedier movements
@@ -186,7 +189,7 @@ command! W w
 command! E e
 
 " Surround plugin
-nmap ö ysw
+"nmap ö ysw
 
 " Quicker selects
 nmap Ü viB
@@ -204,6 +207,7 @@ vnoremap <silent> < <gv
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 " use nmap otherwise insert mode with snipmate breaks on n / N / *
+" it also centers the window on the search when using either n or N
 nmap N Nzz
 nmap n nzz
 nmap * *N
