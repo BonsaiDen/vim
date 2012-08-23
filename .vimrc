@@ -11,45 +11,66 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'BonsaiDen/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
 
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle "wincent/Command-T.git"
+"Bundle 'acp'
+
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+"Bundle "wincent/Command-T.git"
 Bundle "msanders/snipmate.vim"
 "Bundle "surround.vim"
 Bundle "plasticboy/vim-markdown"
+"Bundle "sickill/vim-pasta"
+Bundle "reinh/vim-makegreen"
+Bundle "lambdalisue/nodeunit.vim"
+Bundle "kien/ctrlp.vim"
+"Bundle "numbers"
 
 filetype on
 
 " Basics
 set t_Co=256
 colorscheme symfony
-set guifont=Monospace\ 8
+"set guifont=Monospace\ 8
 set number
 syntax enable
 
+
+
 " Plugin configs
 let g:superTabDefaultCompletionType = "context"
-let g:syntastic_stl_format = ' %E{%e ERRORS LN %fe} ' "[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
+let g:syntastic_stl_format = ' %E{%e ERR #%fe} ' "[%E{Err: %e #%fe}%B{, }%W{Warn: %w #%fw}]'
 let g:syntastic_auto_loc_list = 2 "auto close
 let g:syntastic_cpp_check_header = 1
 let NERDTreeIgnore = ['\.pyc$', '\.h\.gch$', '\.o$']
 let NERDTreeShowBookmarks=1
 
-let g:SuperTabMappingBackward = '<S-tab>'
+let g:SuperTabCrMapping = 1
+let g:SuperTabMappingForward = '<S-tab>'
+let g:SuperTabMappingBackward = '<tab>'
 let g:fuf_buffer_keyDelete = '<C-d>'
 let g:gundo_right = 1
 let g:CommandTMaxHeight = 20
+let g:ctrlp_max_depth = 6
+let g:ctrlp_max_depth = 5000
+"let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+    \ 'file': '\.git.*\|\.exe$\|\.so$\|\.o$\|\.ghc$',
+    \ }
 
 
 " Filetype stuff
 filetype plugin on
 set ofu=syntaxcomplete#Complete
 set ofu=javascript#Complete
+
+set completeopt=menuone
 
 " Smart tabbing / autoindenting
 set undolevels=500
@@ -116,7 +137,7 @@ set laststatus=2
 " Keep 4 lines top/bottom when scrolling
 set scrolloff=4
 set wildmenu
-set wildignore+=*.o,*.obj,.git,.hg
+set wildignore+=*.o,*.obj
 set fillchars=""
 set clipboard=unnamedplus
 let g:clipbrdDefaultReg = '+'
@@ -155,8 +176,14 @@ nnoremap <silent> <c-o> o<ESC>k
 " Jump to last edited line, useful at times
 nnoremap <silent> ü '.
 
+set foldmethod=indent   "fold based on indent
+set foldnestmax=1      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
 " Command T and syntastic Error list
-nmap <silent> <C-t> :CommandT<CR>
+nmap <silent> <C-o> :CtrlPBuffer<CR>
+nmap <silent> <C-i> :CtrlPBuffer<CR>
 nnoremap <silent> <S-t> :FufBuffer<CR>
 nnoremap <silent> <C-e> :Errors<CR>
 
@@ -182,6 +209,14 @@ nmap Ä vi]
 imap ö [
 imap ä {
 inoremap Ö -><ESC>a
+
+" Don't loose selection when indenting or outdenting
+vnoremap <silent> > >gv
+vnoremap <silent> < <gv
+
+
+
+
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -214,7 +249,7 @@ endfun
 autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
 
 " Execute via Shebang
-map <C-X> :call CallInterpreter()<CR>
+"map <C-X> :call CallInterpreter()<CR>
 
 au BufEnter *
 \ if match (getline(1) , '^\#!') == 0 |
@@ -232,10 +267,12 @@ fun! CallInterpreter()
     endif
 endfun
 
+map <C-X> :!./main `pwd`<CR>
+
 " Per file type
 autocmd Filetype jade setlocal ts=2 sw=2 expandtab
 autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
-autocmd Filetype javascript setlocal tags=./tags,~/.vim/tags/javascript/tags
+autocmd Filetype javascript setlocal tags=./tags,~/.vim/tags/javascript/tags 
 
 " Leader key stuff
 let mapleader = ","
@@ -248,6 +285,7 @@ nmap <silent> <Leader>gc :Gcommit<CR>
 nmap <silent> <Leader>gs :Gstatus<CR>
 nmap <silent> <Leader>gb :Gblame<CR>
 nmap <silent> <Leader>bd :bd!<CR>
+
 
 map q <Nop>
 nmap <silent> <Leader>q <C-w>c<CR>
